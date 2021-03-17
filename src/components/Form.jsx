@@ -5,15 +5,6 @@ import useCoin from '../hooks/useCoin'
 import useCrypto from '../hooks/useCrypto'
 import Error from './Error'
 
-const FormContainer = styled.form`
-	margin: 30px 0;
-    padding: 30px;
-    border-radius: 10px;
-    border: solid 1px #eee;
-	box-shadow: 0 2px 2px #ccc;
-    text-align: center;
-`
-
 const Button = styled.button`
 	display: block;
     margin: 20px auto;
@@ -68,13 +59,13 @@ const Form = ({ setCoin, setCrypto}) => {
 	}
 
 	return ( 
-		<FormContainer onSubmit={handleSubmit}>
+		<form onSubmit={handleSubmit}>
 			{error ? <Error msg="Todos los campos son obligatorios"></Error> : null}
 			<h2>Cotizador de Criptomonedas</h2>
 			<SelectCoin/>
 			<SelectCrypto/>
 			<Button type="submit">Cotizar</Button>
-		</FormContainer>
+		</form>
 	);
 }
  

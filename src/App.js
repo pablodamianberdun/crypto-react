@@ -4,9 +4,10 @@ import Header from "./components/Header";
 import illustration from "./illustration-btc.svg";
 import Form from "./components/Form";
 import axios from 'axios'
+import ResultCard from './components/ResultCard'
 
 const Container = styled.div`
-    max-width: 80%;
+    max-width: 90%;
     margin: 0 auto;
     text-align: center;
     @media (min-width: 992px) {
@@ -14,8 +15,17 @@ const Container = styled.div`
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 2rem;
     }
-    font-family: "Nanum Gothic", sans-serif;
+    font-family: 'Roboto', sans-serif;
 `;
+
+const FormContainer = styled.div`
+	margin: 30px 0;
+    padding: 30px;
+    border-radius: 10px;
+    border: solid 1px #eee;
+	box-shadow: 0 2px 2px #ccc;
+    text-align: center;
+`
 
 const Image = styled.img`
     width: 100%;
@@ -24,6 +34,7 @@ const Image = styled.img`
 function App() {
 	const [coin, setCoin] = useState('')
 	const [crypto, setCrypto] = useState('')
+	const [result, setResult] = useState('')
 
 	useEffect( () => {
 		const getQuote = async () => {
@@ -32,7 +43,7 @@ function App() {
 			const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${crypto}&tsyms=${coin}`
 			const response = await axios.get(url)
 
-			console.log(response.data.DISPLAY[crypto][coin])
+			setResult(response.data.DISPLAY[crypto][coin])
 		}
 
 		getQuote()
@@ -42,12 +53,13 @@ function App() {
         <Fragment>
             <Header />
             <Container>
-                <div>
+                <FormContainer>
                     <Form 
 						setCoin={setCoin}
 						setCrypto={setCrypto}
 					></Form>
-                </div>
+					<ResultCard result={result}/>
+                </FormContainer>
                 <div>
                     <Image src={illustration} alt="crypto illustration" />
                 </div>
