@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import axios from 'axios'
 import useCoin from '../hooks/useCoin'
 import useCrypto from '../hooks/useCrypto'
+import Error from './Error'
 
 const FormContainer = styled.form`
 	margin: 30px 0;
@@ -29,8 +30,9 @@ const Button = styled.button`
 	}
 `
 
-const Form = (props) => {
+const Form = ({ setCoin, setCrypto}) => {
 	const [ cryptoList, setCryptoList] = useState([])
+	const [ error, setError ] = useState(false)
 
 	useEffect( () => {
 		const getTopCryptos = async () => {
@@ -47,16 +49,31 @@ const Form = (props) => {
 		{code: "ARS", name: "Peso Argentino"}
 	]
 
-	const [coin, SelectCoin] = useCoin([], coins)
+	const [coin, SelectCoin] = useCoin("", coins)
 
-	const [crypto, SelectCrypto] = useCrypto([], cryptoList)
+	const [crypto, SelectCrypto] = useCrypto("", cryptoList)
+
+	const handleSubmit = e => {
+		e.preventDefault()
+
+		if (coin === "" || crypto === ""){
+			setError(true)
+			return
+		}
+		setError(false)
+
+		setCoin(coin)
+		setCrypto(crypto)
+		
+	}
 
 	return ( 
-		<FormContainer>
+		<FormContainer onSubmit={handleSubmit}>
+			{error ? <Error msg="Todos los campos son obligatorios"></Error> : null}
 			<h2>Cotizador de Criptomonedas</h2>
 			<SelectCoin/>
 			<SelectCrypto/>
-			<Button>Cotizar</Button>
+			<Button type="submit">Cotizar</Button>
 		</FormContainer>
 	);
 }

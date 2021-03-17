@@ -15,10 +15,10 @@ const Title = styled.h1`
     font-size: 50px;
 `
 
-const Header = (props) => {
+const Header = () => {
 	return ( 
 		<Container>
-			<Title>{props.children}</Title>
+			<Title>Crypto</Title>
 		</Container>
 	 );
 }
