@@ -1,6 +1,8 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
 import useCoin from '../hooks/useCoin'
+import useCrypto from '../hooks/useCrypto'
 
 const FormContainer = styled.form`
 	margin: 30px 0;
@@ -28,18 +30,32 @@ const Button = styled.button`
 `
 
 const Form = (props) => {
+	const [ cryptoList, setCryptoList] = useState([])
+
+	useEffect( () => {
+		const getTopCryptos = async () => {
+			const url = 'https://min-api.cryptocompare.com/data/top/mktcapfull?limit=10&tsym=USD'
+			const response = await axios.get(url)
+			setCryptoList(response.data.Data)
+		}
+		getTopCryptos()
+	}, [])
+
 	const coins = [
 		{code: "USD", name: "Dólar USD"},
 		{code: "EUR", name: "Euro"},
 		{code: "ARS", name: "Peso Argentino"}
 	]
 
-	const [coin, SelectCoin] = useCoin( "", coins)
+	const [coin, SelectCoin] = useCoin([], coins)
+
+	const [crypto, SelectCrypto] = useCrypto([], cryptoList)
 
 	return ( 
 		<FormContainer>
 			<h2>Cotizador de Criptomonedas</h2>
 			<SelectCoin/>
+			<SelectCrypto/>
 			<Button>Cotizar</Button>
 		</FormContainer>
 	);
