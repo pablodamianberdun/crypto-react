@@ -5,6 +5,7 @@ import illustration from "./illustration-btc.svg";
 import Form from "./components/Form";
 import axios from 'axios'
 import ResultCard from './components/ResultCard'
+import Spinner from './components/Spinner'
 
 const Container = styled.div`
     max-width: 90%;
@@ -35,6 +36,7 @@ function App() {
 	const [coin, setCoin] = useState('')
 	const [crypto, setCrypto] = useState('')
 	const [result, setResult] = useState('')
+	const [loading, setLoading] = useState(false)
 
 	useEffect( () => {
 		const getQuote = async () => {
@@ -43,7 +45,13 @@ function App() {
 			const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${crypto}&tsyms=${coin}`
 			const response = await axios.get(url)
 
-			setResult(response.data.DISPLAY[crypto][coin])
+			setLoading(true)
+
+			setTimeout(() => {
+				setLoading(false)
+				setResult(response.data.DISPLAY[crypto][coin])
+			}, 2000);
+
 		}
 
 		getQuote()
@@ -58,7 +66,7 @@ function App() {
 						setCoin={setCoin}
 						setCrypto={setCrypto}
 					></Form>
-					<ResultCard result={result}/>
+					{loading ? <Spinner/> : <ResultCard result={result}/>}
                 </FormContainer>
                 <div>
                     <Image src={illustration} alt="crypto illustration" />
