@@ -62,8 +62,8 @@ const Form = ({ setCoin, setCrypto}) => {
 		<form onSubmit={handleSubmit}>
 			{error ? <Error msg="Todos los campos son obligatorios"></Error> : null}
 			<h2>Cotizador de Criptomonedas</h2>
-			<SelectCoin/>
 			<SelectCrypto/>
+			<SelectCoin/>
 			<Button type="submit">Cotizar</Button>
 		</form>
 	);

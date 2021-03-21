@@ -1,31 +1,24 @@
-import React, { Fragment, useState } from 'react'
-import styled from 'styled-components'
-
-const Select = styled.select`
-    display: block;
-	margin: 10px auto;
-    padding: 5px;
-    width: 60%;
-`
+import React, { Fragment, useState } from "react";
+import { Select } from "antd";
 
 const useCoin = (initialState, options) => {
-	const [state, setState] = useState(initialState)
+    const [state, setState] = useState(initialState);
+    const { Option } = Select;
 
-	const SelectCoin = () => (
-		<Fragment>
-			<Select 
-				onChange={ e => setState(e.target.value)} 
-				value={state}
-			>
-				<option value="" disabled>-- Moneda --</option>
-				{options.map( option => (
-					<option key={option.code} value={option.code}>{option.name}</option>
-				))}
-			</Select>
-		</Fragment>
-	)
+    const SelectCoin = () => (
+        <Fragment>
+            <Select defaultValue={state}
+				style={{ width: 300, display: "block", margin: "20px auto" }} 
+				onChange={value => setState(value)}>
+				<Option value="" disabled>-- Moneda --</Option>
+                {options.map((option) => (
+					<Option key={option.code} value={option.code}>{option.name}</Option>
+                ))}
+            </Select>
+        </Fragment>
+    );
 
-	return [state, SelectCoin, setState]
-}
- 
+    return [state, SelectCoin, setState];
+};
+
 export default useCoin;
