@@ -9,7 +9,7 @@ const useCrypto = (initialState, cryptos) => {
         <Fragment>
             <Select
                 showSearch
-                style={{ width: 300, display:"block", margin: "0 auto" }}
+                style={{ width: 250, display:"block", margin: "0 auto" }}
                 placeholder="Select a Crypto"
                 optionFilterProp="children"
                 onChange={value => setState(value)}

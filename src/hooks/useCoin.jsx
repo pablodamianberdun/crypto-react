@@ -8,7 +8,7 @@ const useCoin = (initialState, options) => {
     const SelectCoin = () => (
         <Fragment>
             <Select defaultValue={state}
-				style={{ width: 300, display: "block", margin: "20px auto" }} 
+				style={{ width: 250, display: "block", margin: "20px auto" }} 
 				onChange={value => setState(value)}>
 				<Option value="" disabled>-- Moneda --</Option>
                 {options.map((option) => (
